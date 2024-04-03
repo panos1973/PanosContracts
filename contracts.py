@@ -1,8 +1,7 @@
 import streamlit as st
 import anthropic
 import nltk
-from find_data import read_docx, read_pdf
-from create_embeddings import embed
+
 
 client = anthropic.Anthropic(
     api_key=st.secrets["haiku_api"],
@@ -16,6 +15,22 @@ You donot have to worry about complete contract, i will provie you complete cont
 Also please utilize all tokens you can, do not hesitate to give long output as long as it is correct and important. Also only return the part of the contract not a single word other than that so that i will combine all updated contract parts and will make a new one.
 
 """
+
+def read_pdf(file):#this function will read the pdf files and return its content
+    reader = PdfReader(file)
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text() + "\n"
+    return text
+
+def read_docx(file):#this function will read the docx files and return its content
+    doc = Document(file)
+    text = ""
+    for para in doc.paragraphs:
+        text += para.text + "\n"
+    return text
+
+
 
 def chat_haiku(currentcase, sample_contract):
     message = client.messages.create(
