@@ -1,6 +1,8 @@
 import streamlit as st
 import anthropic
 import nltk
+from PyPDF2 import PdfReader
+from docx import Document
 
 
 client = anthropic.Anthropic(
