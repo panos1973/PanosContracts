@@ -1,10 +1,4 @@
 import streamlit as st
-from chat import update_chat, show_chat_history, save_and_reset
-from gpt_4 import chat_with_GPT4
-from gpt_3 import chat_with_GPT3
-from gemini_pro import chat_with_Gemini, read_pdf, read_docx
-from find_data import find_relevant_files
-from claude3_haiku import chat_with_Claude3
 from contracts import contract_function
 import pandas as pd
 
@@ -119,38 +113,6 @@ button, select {
 logo = "300px.png"
 st.sidebar.image(logo, use_column_width=True)
 
-# Option to choose from Gemini or GPT
-chat_choice = st.sidebar.radio("Επιλέξτε Μοντέλο:", ["GPT-3.5 Turbo", "GPT-4 Turbo", "Claude-3 Haiku", "Gemini-Pro"])
-if chat_choice == "GPT-4 Turbo":
-    st.header("GPT-4 Turbo")
-elif chat_choice == "GPT-3.5 Turbo":
-    st.header("GPT-3.5 Turbo")
-elif chat_choice == "Gemini-Pro":
-    st.header("Gemini-Pro")
-elif chat_choice == "Claude-3 Haiku":
-    st.header("Claude-3 Haiku")
-
-
-# If chat is not started yet
-if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {
-            "role": "assistant",
-                        "content": "Παρακαλώ επιλέξτε ένα ΑΙ μοντέλο (αριστερά), και ανεβάστε ένα αρχείο με την περιγραφή της τρέχουσας υπόθεσής σας. \n\n Θα σας συνιστούσα η περιγραφή να είναι όσο πιο αναλυτική γίνεται προκειμένου να μπορέσω να έχω περισσότερα δεδομένα ώστε να εμβαθύνω στην ανάλυσή μου. \n\n\nΣημειώστε ότι το αρχείο μπορεί να είναι σε μορφή docx ή pdf.\n\n\n"
-        }
-    ]
-
-
-# New Chat Button
-if st.sidebar.button("Νέο Chat"):
-    save_and_reset(st.session_state.messages)
-    st.session_state.messages = []
-    st.session_state.messages = [
-        {
-            "role": "assistant",
-            "content": "Παρακαλώ επιλέξτε ένα ΑΙ μοντέλο (αριστερά), και ανεβάστε ένα αρχείο με την περιγραφή της τρέχουσας υπόθεσής σας. \n\n Θα σας συνιστούσα η περιγραφή να είναι όσο πιο αναλυτική γίνεται προκειμένου να μπορέσω να έχω περισσότερα δεδομένα ώστε να εμβαθύνω στην ανάλυσή μου. \n\n\nΣημειώστε ότι το αρχείο μπορεί να είναι σε μορφή docx ή pdf.\n\n\n"
-        }
-    ]
 
     
 # Display chat messages from history on app rerun
@@ -166,26 +128,8 @@ if 'contract_ready' not in st.session_state:
 
 if __name__ == "__main__":
     
-    # Check if the session state variable 'file_updated' exists, if not, initialize it as False
-    if 'uploaded_files' not in st.session_state:
-        st.session_state.find_files = False
-        st.session_state.uploaded_files=None
 
-    # File uploading feature
-    st.sidebar.title("Αρχείο")
-    uploaded_file = st.sidebar.file_uploader("Ανεβάστε το αρχείo της τρέχουσας υπόθεσης", accept_multiple_files=False, type=['pdf', 'docx'])
-    if not uploaded_file:
-        st.session_state.find_files=True
-        st.session_state.uploaded_files=None
-
-    if uploaded_file and st.session_state.find_files:
-        with st.sidebar:
-            with st.spinner("Ψάχνουμε τα σχετικά αρχεία"):    
-                st.session_state.uploaded_files = find_relevant_files(uploaded_file)
-                st.session_state.find_files=False
-
-    update_chat()
-    st.sidebar.title("Click here to use contract functionality")
+    st.sidebar.title("Contract functionality only for testing")
     #if st.button("Create Contracts"):
     # Upload sample contract
     sample_contract = st.sidebar.file_uploader("Upload your sample contract here", key="sample_contract", type=['pdf', 'docx'])
@@ -219,12 +163,3 @@ if __name__ == "__main__":
     st.sidebar.image(logo2, use_column_width=True)
     print("Uploaded files = ")
     # Select chatting model according to user choice
-    if st.session_state.uploaded_files:
-        if chat_choice == "GPT-4 Turbo":
-            chat_with_GPT4(st.session_state.uploaded_files)
-        elif chat_choice == "Gemini-Pro":
-            chat_with_Gemini(st.session_state.uploaded_files)
-        elif chat_choice == "GPT-3.5 Turbo":
-            chat_with_GPT3(st.session_state.uploaded_files)
-        elif chat_choice == "Claude-3 Haiku":
-            chat_with_Claude3(st.session_state.uploaded_files)
