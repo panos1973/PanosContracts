@@ -4,7 +4,7 @@ import nltk
 from PyPDF2 import PdfReader
 from docx import Document
 
-
+nltk.download('punkt')
 client = anthropic.Anthropic(
     api_key=st.secrets["haiku_api"],
 )
