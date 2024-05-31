@@ -11,10 +11,9 @@ client = anthropic.Anthropic(
 
 
 introductory_prompt = """
-You are provided with a small part of a sample contract i made for another client with similar case and a current case file. 
-I want you to read the current case and understand it and then make changes in the part of the contract according to the current case.
-You donot have to worry about complete contract, i will provie you complete contarct in diferent parts so you can comlete that. so now just focus on chaning this part of the contract according to provided current case.
-Also please utilize all tokens you can, do not hesitate to give long output as long as it is correct and important. Also only return the part of the contract not a single word other than that so that i will combine all updated contract parts and will make a new one.
+Σας παρέχονται 2 αρχεία, ένα πλήρες συμβόλαιο που δημιούργησα για μια υπόθεση πελάτη μου στο παρελθόν, και 2ον τα στοιχεία μιας πολύ παρόμοιας  τρέχουσας υπόθεσης ενός νέου πελάτη μου. Θέλω να διαβάσετε προσεκτικά την τρέχουσα υπόθεση, να την κατανοήσετε πλήρως και στη συνέχεια να κάνετε αλλαγές στο μέρος του πλήρες συμβολαίου σύμφωνα με την τρέχουσα υπόθεση. 
+Επίσης, παρακαλώ αξιοποιήστε όλα τα tokens, μην διστάσετε να δώσετε όσο το δυνατό μακροσκελή απάντηση εφόσον είναι σωστή και σημαντική. 
+Επίσης παρακαλώ βάλτε και να και χωρίστε παραγράφους όπου καταλαβαίνετε ότι χρειάζεται.
 
 """
 
